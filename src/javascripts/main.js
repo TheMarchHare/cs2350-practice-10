@@ -1,4 +1,4 @@
-//TODO - Your ES6 JavaScript code (if any) goes here
+
 import "bootstrap"
 
 let initial_cards = [
@@ -77,9 +77,20 @@ let initial_cards = [
 
     document.querySelector("#cards").innerHTML=cards_html
 
+    document.querySelectorAll('.to-delete').forEach(function(btn){
+      btn.onclick = function(event){
+        if(confirm("Are you sure you want to delete this card?")){
+          cards.splice(event.target.closest('.col').dataset.ndx, 1)
+          localStorage.setItem("cards", JSON.stringify(cards))
+          displayCards()
+        }
+      }
+    })
+
     hideForm()
   }
 
   document.querySelector("#myForm").onsubmit = addNewCard
   document.querySelector("#new_card").onclick = hideCards
+  document.querySelector(".to-cancel").onclick = hideForm
   displayCards()
